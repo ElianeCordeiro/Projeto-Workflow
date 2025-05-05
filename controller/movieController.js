@@ -7,9 +7,21 @@ let movies = [
 const movieController = {
 
   readAll: (req, res) => {
-    res.status(200).json(movies);
+    res.status(200).json(movies)
   },
 
+  create: (req, res) => {
+    const {title, date} = req.body
+
+    const newMovie = {
+      id: movies.length + 1,
+      title,
+      date
+    }
+
+    movies.push(newMovie)
+    res.status(201).json(newMovie)
+  }
 
 };
  
