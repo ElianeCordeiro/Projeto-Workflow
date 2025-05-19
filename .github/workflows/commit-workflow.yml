@@ -20,5 +20,5 @@ jobs:
       run: npm install
 
     - name: Iniciar servidor 
-      run: npm start 
+      run: npm start &
 
