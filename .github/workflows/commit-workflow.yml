@@ -1,0 +1,24 @@
+name: Workflow para commits
+
+on:
+  [push]
+
+jobs:
+  run-api:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar o repositorio
+      uses: actions/checkout@v4
+
+    - name: Instalar Node.js versao 18
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Instalar dependencias
+      uses: npm install
+
+    - name: Iniciar servidor 
+      run: npm start 
+
