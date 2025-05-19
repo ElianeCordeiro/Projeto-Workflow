@@ -1,0 +1,26 @@
+name: Workflow para Pull Requests
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-api-pr:
+    runs-on:
+      ubuntu-latest
+
+    steps:
+      - name: Clona o repositorio e modifica para a branch de origem do PR
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js versao 18
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 18
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Iniciar servidor 
+        run: npm start & 
