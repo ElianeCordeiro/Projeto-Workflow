@@ -26,4 +26,26 @@ POST: http://localhost:3000/api/movies com JSON no body:
   "date": "2014-11-07"
 }
 ```
+## Como rodar o projeto com Vagrantfile?
 
+```bash
+#Em um terminal, navegue até a pasta root do projeto e inicialize o vagrant
+vagrant up
+
+#Conecte-se a vm1 via ssh
+vagrant ssh vm1
+
+#Navegue até a pasta do projeto
+cd /home/vagrant/app
+
+#Instale as dependências e suba a aplicação
+npm install
+npm start
+
+#Em outro terminal, ainda na pasta do projeto, conecte-se a vm2
+vagrant ssh vm2
+
+#Teste a rota GET
+curl http://192.168.56.10:3000/api/movies
+```
+- Nota: A instalação do curl e a sincronização das pastas serão realizadas no momento do provisionamento da infraestrutura com vagrant up
