@@ -6,18 +6,17 @@ Vagrant.configure("2") do |config|
     vm1.vm.network :private_network, :ip => "192.168.56.10"
     vm1.vm.synced_folder ".", "/vagrant-data"
     vm1.vm.provision "shell", inline: <<-SHELL1
-        curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-        apt-get update
-        apt-get install nodejs -y
-        cp -r /vagrant-data /home/vagrant/app
+        apt-get update -y > /dev/null 2>&1
+        apt-get install -y software-properties-common
+        add-apt-repository --yes --update ppa:ansible/ansible
+        apt-get install -y ansible
     SHELL1
   end
 
   config.vm.define :vm2 do |vm2|
     vm2.vm.network :private_network, :ip => "192.168.56.11"
     vm2.vm.provision "shell", inline: <<-SHELL2
-        apt-get update
-        apt-get install -y curl
+        apt-get update -y > /dev/null 2>&1
     SHELL2
   end
 

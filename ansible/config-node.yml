@@ -1,0 +1,41 @@
+---
+- name: Configurar e implantar a API de Filmes na VM2
+  hosts: servidores_app
+  become: yes 
+
+  tasks:
+    - name: 1. Atualizar o cache de pacotes APT
+      apt:
+        update_cache: yes
+      changed_when: false
+
+    - name: 2. Instalar pacotes essenciais (git, curl)
+      apt:
+        name:
+          - git
+          - curl
+        state: present
+
+    - name: 3. Adicionar o repositório do Node.js 18.x
+      shell: "curl -fsSL https://deb.nodesource.com/setup_18.x | bash -"
+      args:
+        creates: /etc/apt/sources.list.d/nodesource.list 
+
+    - name: 4. Instalar o Node.js
+      apt:
+        name: nodejs
+        state: present
+
+    - name: 5. Clonar o repositório da aplicação
+      git:
+        repo: 'https://github.com/ElianeCordeiro/Projeto-Workflow.git'
+        dest: /home/vagrant/app
+        version: main
+        force: yes 
+      become_user: vagrant
+
+    - name: 6. Instalar dependências do projeto com npm
+      community.general.npm:
+        path: /home/vagrant/app
+        state: latest 
+      become_user: vagrant 
